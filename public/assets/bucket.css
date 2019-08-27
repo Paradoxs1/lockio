@@ -1,0 +1,229 @@
+.tree, .main-tree{
+    margin: 0;
+    text-align: left;
+    padding-left: 0;
+}
+
+.tree-title.active .tree-name:before{
+    content: "\f07c" !important;
+}
+
+.tree-title i, .tree-item i{
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.tree-title i::before{
+    content: "\f07b";
+    font-family: FontAwesome;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.tree-title{
+    font-weight: bold;
+    list-style-type: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-left: 0;
+    word-wrap: break-word;
+    white-space: -moz-pre-wrap;
+    white-space: pre-wrap;
+}
+
+.filetree > .tree-item{
+    display: block;
+}
+
+.tree-item i::before{
+    content: "\f15b";
+    font-family: FontAwesome;
+    font-size: 12px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+.i-choose::before{
+    border-radius: 50%;
+    border: 2px solid orange;
+    color: orange;
+    font-size: 12px;
+    text-align: center;
+    content: "\f00c" !important;
+}
+
+.tree-item .tree-name:hover, .tree-title .tree-name:hover, .tree-download:hover{
+    opacity: 0.6;
+}
+
+.tree-item{
+    word-wrap: break-word;
+    white-space: -moz-pre-wrap;
+    white-space: pre-wrap;
+    cursor: pointer;
+    list-style-type: none;
+    display: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.filetree{
+    list-style: none;
+    padding-left: 0;
+}
+.filetree>.tree, .filetree>.tree-item{
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.breadcrumbs a{
+    font-size: 20px;
+    color: #222;
+}
+.breadcrumbs a::after{
+    content: "/";
+    margin: 0 4px;
+    color: #8e8e8e;
+}
+.link-home::before{
+    content: '\f015';
+    font-family: FontAwesome;
+    font-size: 22px;
+    display: inline-block;
+    text-align: center;
+    width: 40px;
+}
+.breadcrumbs{
+    padding: 20px 0;
+}
+.breadcrumbs a:hover{
+    text-decoration: none;
+    color: #1b6d85;
+}
+.top-panel{
+    list-style-type: none;
+}
+.top-panel{
+    font-size: 0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #000;
+    display: flex;
+    flex-direction: row;
+}
+.top-panel span{
+    cursor: pointer;
+    height: 100%;
+}
+.top-panel span:hover{
+    color: #1b6d85;
+}
+.top-panel span::after{
+    font-size: 16px;
+}
+.top-panel span::after, .tree-item .tree-download::after{
+    font-family: FontAwesome;
+    text-align: center;
+    display: inline-block;
+    width: 25px;
+}
+.top-panel .tree-name::after{
+    content: "\F15D";
+}
+.top-panel .tree-size::after{
+    content: "\F160";
+}
+
+.top-panel .tree-time::after{
+    content: "\F162";
+}
+.top-panel .tree-name.active::after{
+    content: "\F15E";
+}
+.top-panel .tree-size.active::after{
+    content: "\F161";
+}
+.top-panel .tree-time.active::after{
+    content: "\F163";
+}
+.tree-item, .tree-title{
+    width: 100%;
+}
+.tree-item .tree-download::after{
+    content: '\f019';
+}
+.tree-name, .tree-size, .tree-time, .tree-download{
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 24px;
+}
+.tree-name{
+    width: 50%;
+}
+.tree-size, .tree-time{
+    width: 20%;
+}
+.tree-download{
+    float: right;
+}
+.bucket-button-block{
+    position: fixed;
+    bottom: 60px;
+    right: 40px;
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    cursor: pointer;
+}
+.bucket-button-block.active .add-bucket{
+    display: none;
+}
+.bucket-button-block.active .download-cloud-files{
+    display: block;
+}
+.add-bucket, .download-cloud-files{
+    height: 100%;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+}
+.add-bucket{
+    color: #fff;
+    font: normal 40px/55px Arial, sans-serif;
+    background-color: #00b5a7;
+}
+.download-cloud-files{
+    display: none;
+    background: #c8e0df url('../img/cloud.png') no-repeat center center;
+}
+.download-cloud-files:hover{
+    opacity: .7;
+}
+.download-cloud-files.active{
+    display: block;
+}
+.add-bucket:hover{
+    opacity: .7;
+}
+.bucket-trial{
+    margin-bottom: 70px;
+}
+.bucket-trial+span{
+    font: bold 20px/30px Arial, sans-serif;
+    color: #fff;
+    opacity: 1;
+}
+
+.hide{
+    height: 0px;
+    display: none !important;
+}

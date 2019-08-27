@@ -1,0 +1,11 @@
+{% if is_granted('ROLE_USER') %}
+    {% if organization is defined and organization.trialEndsAt is not null %}
+        <div class="trialPeriodBanner" style="position: relative; top: -16px; text-align: center; background-color: #f7b0bb; padding: 20px; z-index: 1000;">
+            {% if days is defined %}
+                <p>{% if days.days > 1 %}{{ 'trialPeriodBanner.morePreMessage'|trans({'%days%': days.days }) }}{% else %}{{ ('trialPeriodBanner.morePreMessage' ~ days.days)|trans }}{% endif %} <a href="{{ path('app_payment_settings') }}">{{ 'trialPeriodBanner.link'|trans }}</a> {{ 'trialPeriodBanner.morePostMessage'|trans }}</p>
+            {% else %}
+                <p>{{ 'trialPeriodBanner.lessPreMessage'|trans }} <a href="{{ path('app_payment_settings') }}">{{ 'trialPeriodBanner.link'|trans }}</a> {{ 'trialPeriodBanner.lessPostMessage'|trans }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}

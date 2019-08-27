@@ -1,0 +1,51 @@
+stages:
+ - build
+ - test
+ - deploy
+
+setup dev build:
+  stage: build
+  script:
+    - cd $CI_PROJECT_DIR
+  only:
+    - develop
+  tags:
+    - docker
+    - build
+
+run tests:
+  stage: test
+  script:
+    - docker-compose down
+    - docker-compose pull
+    - docker-compose up -d
+    - docker exec --user $(id -u) lockio-core-dev php /usr/bin/composer install
+    - docker exec --user $(id -u) lockio-core-dev php bin/console doctrine:migrations:migrate -n ## fails if there are no migrations present
+    - docker exec --user $(id -u) lockio-core-dev php bin/console doctrine:fixtures:load --append -n
+    - docker exec --user $(id -u) lockio-core-dev bin/phpunit --colors=never
+  only:
+    - develop
+  tags:
+    - docker
+    - build
+
+deploy on dev-server:
+  stage: deploy
+  script:
+    - docker-compose down
+    - docker-compose pull
+    - docker-compose up -d
+    - docker exec --user $(id -u) lockio-core-dev php /usr/bin/composer install
+    - docker exec --user $(id -u) lockio-core-dev php bin/console doctrine:migrations:migrate -n ## fails if there are no migrations present
+    - docker exec --user $(id -u) lockio-core-dev php bin/console doctrine:fixtures:load --append -n
+    - docker exec --user $(id -u) lockio-core-dev php bin/console bexio:sync-countries -n
+    - docker exec --user $(id -u) lockio-core-dev php bin/console assets:install --symlink -n
+  only:
+    - develop
+  environment:
+    name: Lockio - dev
+    url: https://dev-lockio.alp1.flow.ch
+  tags:
+    - docker
+    - deploy
+    - develop

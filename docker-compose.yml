@@ -1,0 +1,35 @@
+version: '2'
+services:
+  lockio-postgres:
+    container_name: lockio-postgres-dev
+    restart: always
+    image: sameersbn/postgresql:9.6-2
+    environment:
+      - DEBUG=false
+      - DB_USER=lockio-dev
+      - DB_PASS=lockio-dev
+      - DB_NAME=postgres,lockio_dev,lockio_dev_test
+    ports:
+      - "5440:5432"
+
+  lockio-core:
+    container_name: lockio-core-dev
+    image: registry.digio.ch:443/utils/docker-php-caddy/caddy-php:latest
+    volumes:
+      - ./entrypoint.sh:/usr/bin/entrypoint.sh
+      - ./Caddyfile:/etc/Caddyfile
+      - ./:/srv
+    env_file:
+      - dev.env
+    restart: always
+    ports:
+      - "80:80"
+
+  lockio-pg-admin:
+    container_name: lockio-pgadmin-dev
+    image: zhajor/docker-phppgadmin
+    ports: 
+      - "5441:80"
+    environment:
+      - DB_HOST=lockio-postgres
+      - DB_PORT=5432

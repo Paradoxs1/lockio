@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'registrationActivationSent.page_title' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ 'registrationActivationSent.activation_link_sent' | trans }}</h1>
+        <p class="lead">{{ 'registrationActivationSent.we_have_sent' | trans ({'%email%': email}) }}</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="{{ path('login') }}" role="button">{{ 'registrationActivationSent.go_to_login' | trans }}</a>
+    </div>
+{% endblock %}

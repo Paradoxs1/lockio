@@ -1,0 +1,63 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    session_max_idle_time: 900
+    register_infra_auth_token: c7809047e9abeda4a6f5fd6ed09f0621
+    base_usage_gb: 50
+    base_usage_price: 49.90
+    additional_gb_price: 0.5
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Handler\SessionIdleHandler:
+        arguments: ['%session_max_idle_time%']
+        tags: [{ name: kernel.event_listener, event: kernel.request }]
+
+    App\Service\AccountingService:
+        arguments:
+            $companyId: '%env(BEXIO_COMPANY_ID)%'
+            $userId: '%env(BEXIO_USER_ID)%'
+            $publicKey: '%env(BEXIO_PUBLIC_KEY)%'
+            $signatureKey: '%env(BEXIO_SIGNATURE_KEY)%'
+            $baseUrl: '%env(BEXIO_BASE_URL)%'
+            $from: '%env(MAILER_FROM_EMAIL_ADDRESS)%'
+
+    App\Service\BillingService:
+        arguments:
+            $baseUsageGb: '%base_usage_gb%'
+            $baseUsagePrice: '%base_usage_price%'
+            $additionalGbPrice: '%additional_gb_price%'
+
+    App\Service\EmailService:
+        arguments:
+            $from: '%env(MAILER_FROM_EMAIL_ADDRESS)%'
+
+    App\Service\PaymentService:
+        arguments:
+            $secretKey: '%env(STRIPE_SECRET_KEY)%'

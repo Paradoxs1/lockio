@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'bucket.page_title' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{{ asset('assets/bucket.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/invoices.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {% if bucket is not empty %}
+        {% import "bucket/macros_bucket.html.twig" as macro %}
+
+        <div class="breadcrumbs"><a href class="link-home" data-name="home">Home</a></div>
+        <ul class="filetree ul-top">
+            <li class="top-panel tree-breadcrumbs" data-name="home">
+                <span class="tree-name" data-sort="name">Name</span>
+                <span class="tree-size" data-sort="size">Size</span>
+                <span class="tree-time" data-sort="time">Created At</span>
+                <span class="tree-download"></span>
+            </li>
+            {{ macro.macros_bucket(bucket) }}
+        </ul>
+
+        <form action="{{ path('app_bucket_download') }}" method="POST" class="hide download-form">
+            <input type="hidden" class="hide" name="bucketId" value="{{ bucketId }}">
+            <input type="hidden" class="hide input-fileName" name="objects" value="">
+            <input type="submit" value="Submit" class="submit">
+        </form>
+
+        <div class="bucket-button-block">
+            <span class="bucket-button add-bucket">+</span>
+            <span class="bucket-button download-cloud-files"></span>
+        </div>
+    {% else %}
+        {{ 'bucket.title' | trans }}
+    {% endif %}
+
+    {%  if organization.trialEndsAt is not null and organization.trialEndsAt|date('Y-m-d') < "now"|date('Y-m-d') %}
+        <div class="black-backdrop">
+            <p class="bucket-trial">{{ 'bucket.trial_period_has_ended' | trans }}</p>
+            <span>{{ 'bucket.activate_account' | trans }}</span>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        var noSort = '-',
+            comparison = true,
+            nameItem = [],
+            sortField, form, a, b, downloadButton, choose;
+
+        /**
+         * Set the list opened or closed
+         * */
+        function setStatus(node){
+            var elements = [];
+            $(node).each(function(){
+                elements.push($(node).nextAll());
+            });
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].css('display') == 'none'){
+                    elements[i].fadeIn(0);
+                }else{
+                    elements[i].fadeOut(0);
+                }
+            }
+        }
+
+        /**
+         * Sort the list
+         * */
+        function sortList(a, b) {
+            b = ($(b).data(sortField));
+            a = ($(a).data(sortField));
+
+            if (b == noSort || a == noSort) {
+                return 1;
+            }
+
+            if (comparison) {
+                return b < a ? 1 : -1;
+            } else {
+                return b > a ? 1 : -1;
+            }
+        }
+
+        $(document).ready(function () {
+            $('.tree').find('.tree').fadeOut(0);
+
+            $('.tree-title>.tree-name').on('click', function () {
+                setStatus($(this).parent());
+            });
+
+            $('.top-panel span').click(function () {
+                $(this).toggleClass('active');
+
+                if ($(this).hasClass('active')) {
+                    comparison = false;
+                } else {
+                    comparison = true;
+                }
+            });
+
+            //Tree folder navigation
+            $('.tree-title').on('click', '.tree-name', function () {
+
+                var li = $(this).parent(),
+                    name = li.attr('data-name'),
+                    link = $("<a href></a>").text(name).attr('data-name', name),
+                    filetree = $(this).parents('.filetree');
+
+                filetree.find('.ul-top').removeClass('ul-top');
+                filetree.find('.i-choose').removeClass('i-choose');
+
+                //Add link in breadcrumbs filetree
+                filetree.prev().append(link);
+
+                //Hide li.tree-title and siblings ul, li. Also add and remove class .ul-top for sort
+                li.fadeOut(0).parent().addClass('ul-top').siblings('.tree, .tree-item').fadeOut(0).parents('.ul-top').removeClass('ul-top');
+
+            });
+
+            //Top navigation
+            $('.breadcrumbs').on('click', 'a', function (event) {
+                event.preventDefault();
+
+                var name = $(this).attr('data-name'),
+                    preName = $(this).prev().attr('data-name'),
+                    nextName = $(this).next().attr('data-name'),
+                    filetree = $(this).parents('main').find(".filetree"),
+                    findElem;
+
+                //If current link have prev link
+                if (preName) {
+                    findElem = filetree.find(".tree-breadcrumbs[data-name="+preName+"]").parent().find(".tree-breadcrumbs[data-name="+name+"]");
+                } else {
+                    findElem = filetree.find(".tree-breadcrumbs[data-name="+name+"]");
+                }
+
+                if (nextName) {
+                    //Show siblings folder, files and hide current files our last location
+                    findElem.first().siblings().fadeIn(0);
+                    findElem.first().siblings('.tree').find('.tree, .tree-item').fadeOut(0);
+
+                    //Show title our last location
+                    findElem.first().siblings('.tree').find('.tree-title').fadeIn(0);
+
+                    //Delete next all link in breadcrumbs filetree
+                    $(this).nextAll().remove();
+
+                    //Remove and add class ul-top
+                    filetree.find('.ul-top').removeClass('ul-top');
+                    findElem.first().parent().addClass('ul-top');
+
+                    //Remove
+                    filetree.find('.i-choose').removeClass('i-choose');
+                }
+            });
+
+            //Sort
+            $('.top-panel').on('click', 'span', function () {
+                sortField = $(this).data('sort');
+                $(".ul-top>.tree-sort").sort(sortList).appendTo('.ul-top');
+            });
+
+            //Download file
+            $('.tree-download').click(function () {
+                form = $('.download-form');
+                nameItem.push($(this).parent().data('fullname'));
+
+                form.find('.input-fileName').val(JSON.stringify(nameItem));
+                form.find('.submit').click();
+            });
+
+            //Сhoose file or folder and show or hide download button
+            $('.tree-title>i, .tree-item>i').click(function () {
+                $(this).toggleClass('i-choose');
+
+                downloadButton = $(this).parents('main').find('.bucket-button-block');
+                downloadButton.addClass('active');
+
+                if (!$(this).parents('.ul-top').find('.i-choose').length) {
+                    downloadButton.removeClass('active');
+                }
+            });
+
+            //Collect fullname choose file and send to server
+            $('.download-cloud-files').click(function () {
+                var itemElements = [];
+
+                choose = $(this).parents('main').find('.i-choose');
+
+                $(choose.parent('.tree-item')).each(function (index, element) {
+                    itemElements.push($(element).data('fullname'));
+                });
+
+                $(choose.parent('.tree-breadcrumbs').parent().find('.tree-item')).each(function (index, element) {
+                    itemElements.push($(element).data('fullname'));
+                });
+
+                $(this).parent().removeClass('active');
+                choose.removeClass('i-choose');
+
+                $(this).parents('main').find('.download-form .input-fileName').val(JSON.stringify(itemElements)).next().click();
+            });
+        });
+    </script>
+
+{% endblock %}

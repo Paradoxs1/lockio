@@ -1,0 +1,18 @@
+profileDetails:
+  organization_name: At least three characters
+  organization_address1: At least three characters
+  organization_address2: At least three characters
+  organization_address3: At least three characters
+  organization_zip: Incorrect zip format
+  organization_city: At least two characters
+  organization_country: Please select a country
+  password_identical: The entered passwords are not identical
+  password_min: At least 8 characters
+  password_max: Max length password 4096 characters
+  password_uppercase: At least one uppercase character
+  password_number: At least one number
+  user_email: Entered email address is not correct
+  user_firstname: At least two characters
+  user_lastname: At least two characters
+  not_blank: This value should not be blank
+  email_unique: Email already taken

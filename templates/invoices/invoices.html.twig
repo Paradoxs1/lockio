@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'invoices.page_title' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="{{ asset('assets/invoices.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="h3 mb-3 font-weight-normal" style="margin-bottom: 40px !important;">{{ 'invoices.title' | trans }}</h1>
+
+    <div class="row" style="margin-bottom: 30px;">
+        <div class="col-12">
+            <div class="right">
+                <label class="switch">
+                    <input type="checkbox" id="filterStatus" value="NoPaid">
+                    <span class="slider round"></span>
+                </label>
+                <span style="display: inline-block; line-height: 34px; margin-left: 5px;">Show unpaid invoices only</span>
+            </div>
+        </div>
+    </div>
+
+    <table id="invoices" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>{{ 'invoices.invoice' | trans }}</th>
+            <th>{{ 'invoices.amount' | trans }}</th>
+            <th>{{ 'invoices.date' | trans }}</th>
+            <th>{{ 'invoices.due_date' | trans }}</th>
+            <th>{{ 'invoices.status' | trans }}</th>
+            <th>{{ 'invoices.actions' | trans }}</th>
+        </tr>
+        </thead>
+    </table>
+
+    {%  if organization.trialEndsAt %}
+        <div class="black-backdrop">
+            <p>{{ 'invoices.functionality_unavailable' | trans }}</p>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.dataTable.ext.search.push(
+                function( settings, data, dataIndex ) {
+                    var status = data[4];
+                    var selectedStatus = '';
+
+                    if ($('#filterStatus').prop('checked')) {
+                        var selectedStatus = 'NoPaid';
+                    }
+
+                    if (selectedStatus == 'NoPaid') {
+                        if (status == 'Unpaid' || status == 'Overdue') {
+                            return true;
+                        }
+                    }
+
+                    if (selectedStatus == '') {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+
+            var table = $('#invoices').DataTable( {
+                "ajax": '{{ path('app_invoices_ajax') }}',
+                "processing": true,
+                "deferRender": true,
+                "order": [[0, "desc"]],
+                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "columns": [
+                    {"data": "document_nr"},
+                    {"data": "total_gross"},
+                    {"data": "is_valid_from"},
+                    {"data": "is_valid_to"},
+                    {"data": "total_remaining_payments"},
+                    {"data": "id"}
+                ],
+                "columnDefs": [
+                    {
+                        "targets": -1,
+                        "render": function (data, type, row) {
+
+                            var actions = '<a class="btn btn-outline-primary btn-sm" href="' + '{{path('app_invoice_download', {'id' : 'PLACEHOLDER'})}}' + '">' + '{{ 'invoices.download' | trans }}' + '</a>';
+
+                            actions = actions.replace(new RegExp('PLACEHOLDER','g'), data);
+
+                            return actions;
+                        }
+                    },
+                    {
+                        "targets": -2,
+                        "render": function (data, type, row) {
+
+                            var now = new Date();
+                            var is_valid = new Date(row.is_valid_to);
+
+                            if (data == 0) {
+                                status = '{{ 'invoices.paid' | trans }}';
+                            } else if (is_valid < now) {
+                                status = '{{ 'invoices.overdue' | trans }}';
+                            } else {
+                                status = '{{ 'invoices.unpaid' | trans }}';
+                            }
+
+                            return status;
+                        }
+                    },
+                ]
+            });
+
+            $('#filterStatus').on('change', function() {
+                table.draw();
+            });
+        });
+    </script>
+
+{% endblock %}

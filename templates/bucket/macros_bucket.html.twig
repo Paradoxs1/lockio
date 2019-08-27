@@ -1,0 +1,16 @@
+{% macro macros_bucket(bucket) %}
+    {% import _self as macro %}
+
+    {% for key, item in bucket %}
+        {% if item.Key is defined%}
+            <li class="tree-item tree-sort" data-fullname="{{ item.Key }}" data-name="{{ key }}" data-time="{{ item.LastModified|date('Y-m-d H:i:s') }}" data-size="{{ item.Size }}"><i class="i-file"></i><span class="tree-name">{{ key }}</span> <span class="tree-size">{{ item.sizeFile }}</span> <span class="tree-time">{{ item.LastModified|date('Y-m-d H:i:s') }}</span> <span class="tree-download"></span></li>
+        {% else %}
+            <ul class="tree tree-sort" data-name="{{ key }}" data-time="-" data-size="-">
+                <li class="tree-title tree-breadcrumbs" data-name="{{ key }}"><i class="i-folder"></i><span class="tree-name">{{ key }}</span> <span class="tree-size">-</span> <span class="tree-time">-</span></li>
+                {% if key %}
+                    {{ macro.macros_bucket(item) }}
+                {% endif %}
+            </ul>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

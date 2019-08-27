@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'profile.page_title' | trans }}{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'attr': {'class':"form-signin"}}) }}
+
+    <h1 class="h3 mb-3 font-weight-normal">{{ 'profile.profile' | trans }}</h1>
+
+    <div class="row" style="margin-top: 30px; margin-bottom: 20px;">
+        <label class="col-sm-12" style="font-weight: 600;">{{ 'profile.account' | trans }}</label>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-6">
+            {{ form_label(form.firstname) }}
+            {{ form_errors(form.firstname) }}
+            {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group col-6">
+            <label for="registration_email" class="required">{{ 'profile.email' | trans }}</label>
+            <div class="form-control" style="background-color: #e9ecef;">{{ user.email }}</div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-6">
+            {{ form_label(form.lastname) }}
+            {{ form_errors(form.lastname) }}
+            {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-row form-update" style="margin-top: 20px;">
+        <div class="form-group col-12">
+            {{ form_widget(form.updatePassword) }}
+            {{ form_label(form.updatePassword) }}
+        </div>
+    </div>
+
+    <div class="form-row form-password">
+        <div class="form-group col-6">
+            {{ form_errors(form.plainPassword.first) }}
+            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+        </div>
+    </div>
+
+    <div class="form-row form-password">
+        <div class="form-group col-6">
+            {{ form_errors(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+        <label class="col-sm-12" style="font-weight: 600;">{{ 'profile.organization' | trans }}</label>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-6">
+            <label for="registration_name" class="required">{{ 'profile.organization_name' | trans }}</label>
+            <div class="form-control" style="background-color: #e9ecef;">{{ organization.name }}</div>
+        </div>
+
+        <div class="form-group col-6">
+            {{ form_label(form.address1) }}
+            {{ form_errors(form.address1) }}
+            {{ form_widget(form.address1, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-6">
+            <div class="form-row">
+                <div class="form-group col-4">
+                    {{ form_label(form.zip) }}
+                    {{ form_errors(form.zip) }}
+                    {{ form_widget(form.zip, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="form-group col-md-8">
+                    {{ form_label(form.city) }}
+                    {{ form_errors(form.city) }}
+                    {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-6">
+            {{ form_label(form.address2) }}
+            {{ form_errors(form.address2) }}
+            {{ form_widget(form.address2, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-6">
+            {{ form_label(form.country) }}
+            {{ form_errors(form.country) }}
+            {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group col-6">
+            {{ form_label(form.address3) }}
+            {{ form_errors(form.address3) }}
+            {{ form_widget(form.address3, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+
+    {#<div style="display: none;">#}
+        {{ form_rest(form) }}
+    {#</div>#}
+
+    <div class="form-row" style="margin-top: 20px; float: right;">
+        <button type="submit" class="btn btn-success" formnovalidate>{{ 'profile.save' | trans }}</button>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            var update = $('.form-update input');
+
+            {% if checkPasswordUpdate %}
+                $('.form-password input').prop('disabled', !update.prop('checked'));
+            {% else %}
+                update.click();
+            {% endif %}
+
+            update.change(function () {
+                $('.form-password input').prop('disabled', !update.prop('checked'));
+            });
+        });
+    </script>
+{% endblock %}

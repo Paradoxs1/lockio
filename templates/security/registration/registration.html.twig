@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'registration.page_title' | trans }}{% endblock %}
+
+{%  block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/signup.css') }}" rel="stylesheet">
+{%  endblock %}
+
+{% block content %}
+    {{ form_start(form, {'attr': {'class':"form-signin", novalidate: 'novalidate'}}) }}
+
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center;">{{ 'registration.sign_up' | trans }}</h1>
+
+        <div class="row" style="margin-top: 35px; margin-bottom: 15px;">
+            <div class="col-sm-12">{{ 'registration.organization_details' | trans }}</div>
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.address1) }}
+            {{ form_widget(form.address1, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.address2) }}
+            {{ form_widget(form.address2, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.address3) }}
+            {{ form_widget(form.address3, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form_errors(form.zip) }}
+                {{ form_widget(form.zip, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group col-md-8">
+                {{ form_errors(form.city) }}
+                {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.country) }}
+            {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-sm-12">{{ 'registration.contact_person' | trans }}</div>
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.firstname) }}
+            {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.lastname) }}
+            {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+    {{ form_rest(form) }}
+
+        <a class="btn btn-primary" href="{{ path('login') }}">{{ 'registration.cancel' | trans }}</a>
+        <button type="submit" class="btn btn-success">{{ 'registration.register' | trans }}</button>
+
+    {{ form_end(form) }}
+
+{% endblock %}

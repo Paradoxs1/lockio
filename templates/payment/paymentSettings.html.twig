@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'paymentSettings.page_title' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('assets/stripe.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="h3 mb-3 font-weight-normal">{{ 'paymentSettings.payment_settings' | trans }}</h1>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="row" style="margin-top: 30px; margin-bottom: 20px;">
+                <label class="col-sm-12" style="font-weight: 600;">{{ 'paymentSettings.credit_card' | trans }}</label>
+            </div>
+
+            {% if card and card | length > 0 %}
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" id="editCard" class="btn btn-primary">{{ 'paymentSettings.edit' | trans }}</button>
+                    </div>
+                </div>
+
+                <div id="infoCardContainer" style="margin-top: 30px;">
+                    <div class="row">
+                        <label class="col-2">{{ 'paymentSettings.holder' | trans }}</label>
+                        <div class="col-10">
+                            <p class="form-control-static">{{ card.name }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-2">{{ 'paymentSettings.card_number' | trans }}</label>
+                        <div class="col-10">
+                            <p class="form-control-static">**** **** **** {{ card.last4 }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-2">{{ 'paymentSettings.expires' | trans }}</label>
+                        <div class="col-10">
+                            <p class="form-control-static">{{ card.exp_month }} / {{ card.exp_year }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" id="addCard" class="btn btn-primary">{{ 'paymentSettings.add_card' | trans }}</button>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div id="editCardContainer" style="margin-top: 30px; display: none;">
+                <form method="post" id="payment-form" >
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="name">{{ 'paymentSettings.name' | trans }}</label>
+                            <input type="text" placeholder="{{ 'paymentSettings.firstname_lastname' | trans }}" id="name" name="name" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="card-number">{{ 'paymentSettings.card_number' | trans }}</label>
+                            <div id="card-number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-3">
+                            <label for="card-date">{{ 'paymentSettings.expires' | trans }}</label>
+                            <div id="card-date">
+                            </div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="card-cvv">{{ 'paymentSettings.cvv' | trans }}</label>
+                            <div id="card-cvv">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="token" name="token">
+
+                    <div class="form-row" style="margin-top: 10px;">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-success">{{ 'paymentSettings.save' | trans }}</button>
+                        </div>
+                    </div>
+
+                    <div id="card-errors" role="alert" style="margin-top: 20px;"></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="row" style="margin-top: 30px; margin-bottom: 20px;">
+                <label class="col-sm-12" style="font-weight: 600;">{{ 'paymentSettings.billing_information' | trans }}</label>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <strong><p class="form-control-static">{{ organization.name }}</p></strong>
+                    <p class="form-control-static">{{ organization.address1 }}</p>
+                    <p class="form-control-static">{{ organization.address2 }}</p>
+                    <p class="form-control-static">{{ organization.address3 }}</p>
+                    <p class="form-control-static">{{ organization.zip }} {{ organization.city }}</p>
+                    <p class="form-control-static">{{ organization.country }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $('#addCard').click(function () {
+                $('#editCardContainer').toggle();
+            });
+
+            $('#editCard').click(function () {
+                $('#infoCardContainer').toggle();
+                $('#editCardContainer').toggle();
+            });
+
+            var stripe = Stripe('{{ stripe_publishable_key }}');
+            var elements = stripe.elements();
+            var style = {
+                base: {
+                    color: '#32325d',
+                    lineHeight: '18px',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    // '::placeholder': {
+                    //     color: '#aab7c4'
+                    // }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                }
+            };
+
+            var card = elements.create('cardNumber', {
+                style: style,
+                placeholder: '{{ 'paymentSettings.edit_credit_card_no' | trans }}'
+            });
+            card.mount('#card-number');
+
+            var cardDate = elements.create('cardExpiry', {
+                style: style,
+                placeholder: '{{ 'paymentSettings.mm_yy' | trans }}'
+            });
+            cardDate.mount('#card-date');
+
+            var cardCVV = elements.create('cardCvc', {
+                style: style,
+                placeholder: '{{ 'paymentSettings.cvv' | trans }}'
+            });
+            cardCVV.mount('#card-cvv');
+
+
+            card.addEventListener('change', ({error}) => {
+                const displayError = document.getElementById('card-errors');
+                if (error) {
+                    displayError.textContent = error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                stripe.createToken(card, {name: $('#name').val()}).then(function(result) {
+                    if (result.error) {
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        $('#token').val(result.token.id);
+                        form.submit();
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

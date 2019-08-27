@@ -1,0 +1,487 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+
+msgid "message.your_changes_were_saved"
+msgstr "Your changes were saved!"
+
+msgid "message.error_during_updating_contact_bexio"
+msgstr "Error during updating contact details in accounting system!"
+
+msgid "message.error_during_adding_new_contact_bexio"
+msgstr "Error during adding new contact to accounting system!"
+
+msgid "message.error_during_retreive_invoice_bexio"
+msgstr "Error during retrieve invoice from accounting system!"
+
+msgid "message.error_during_adding_new_card"
+msgstr "Error during adding new card to customer Stripe!"
+
+msgid "message.error_during_retreive_customer"
+msgstr "Error during retrieve customer from Stripe!"
+
+msgid "message.error_during_adding_new_customer"
+msgstr "Error during adding new customer Stripe!"
+
+msgid "message.error_during_creating_bucket"
+msgstr "Error during creating new bucket!"
+
+msgid "message.error_bucket_no_all_data"
+msgstr "Error during to check data!"
+
+msgid "message.error_bucket_not_files_exist"
+msgstr "Sorry, but there are no selected files or they are not available."
+
+msgid "message.error_bucket_no_file"
+msgstr "Error during to get file!"
+
+msgid "message.error_bucket_create_zip"
+msgstr "Error during to create zip-archive!"
+
+msgid "message.wrong_link"
+msgstr "Wrong link!"
+
+msgid "message.email_unique"
+msgstr "Email already taken"
+
+msgid "message.email_not_found"
+msgstr "Email not found"
+
+
+
+msgid "header.actions"
+msgstr "Actions"
+
+msgid "header.bucket"
+msgstr "Bucket"
+
+msgid "header.profile"
+msgstr "Profile"
+
+msgid "header.payment_settings"
+msgstr "Payment settings"
+
+msgid "header.invoices"
+msgstr "Invoices"
+
+msgid "header.logout"
+msgstr "Logout"
+
+msgid "header.login"
+msgstr "Login"
+
+msgid "header.register"
+msgstr "Register"
+
+
+
+msgid "homepage.page_title"
+msgstr "Homepage"
+
+msgid "homepage.title"
+msgstr "Lockio homepage"
+
+
+
+msgid "bucket.page_title"
+msgstr "Bucket"
+
+msgid "bucket.title"
+msgstr "Empty bucket"
+
+msgid "bucket.trial_period_has_ended"
+msgstr "Your trial period has ended. Activate your account to enable this functionality again."
+
+msgid "bucket.activate_account"
+msgstr "Activate my account"
+
+msgid "invoices.page_title"
+msgstr "Invoices"
+
+msgid "invoices.title"
+msgstr "Invoices"
+
+msgid "invoices.invoice"
+msgstr "Invoice"
+
+msgid "invoices.amount"
+msgstr "Amount"
+
+msgid "invoices.date"
+msgstr "Date"
+
+msgid "invoices.due_date"
+msgstr "Due date"
+
+msgid "invoices.status"
+msgstr "Status"
+
+msgid "invoices.actions"
+msgstr "Actions"
+
+msgid "invoices.functionality_unavailable"
+msgstr "This functionality is unavailable due to current trial period."
+
+msgid "invoices.download"
+msgstr "Download"
+
+msgid "invoices.paid"
+msgstr "Paid"
+
+msgid "invoices.unpaid"
+msgstr "Unpaid"
+
+msgid "invoices.overdue"
+msgstr "Overdue"
+
+msgid "invoices.all"
+msgstr "All"
+
+msgid "invoices.filter_status"
+msgstr "Status"
+
+
+
+msgid "paymentSettings.page_title"
+msgstr "Payment settings"
+
+msgid "paymentSettings.payment_settings"
+msgstr "Payment settings"
+
+msgid "paymentSettings.credit_card"
+msgstr "Credit card"
+
+msgid "paymentSettings.edit"
+msgstr "Edit"
+
+msgid "paymentSettings.holder"
+msgstr "Holder"
+
+msgid "paymentSettings.card_number"
+msgstr "Card no"
+
+msgid "paymentSettings.expires"
+msgstr "Expires"
+
+msgid "paymentSettings.add_card"
+msgstr "Add card"
+
+msgid "paymentSettings.name"
+msgstr "Name"
+
+msgid "paymentSettings.firstname_lastname"
+msgstr "Firstname Lastname"
+
+msgid "paymentSettings.cvv"
+msgstr "CVV"
+
+msgid "paymentSettings.save"
+msgstr "Save"
+
+msgid "paymentSettings.billing_information"
+msgstr "Billing information"
+
+msgid "paymentSettings.edit_credit_card_no"
+msgstr "Enter Credit Card Number"
+
+msgid "paymentSettings.mm_yy"
+msgstr "MM/YY"
+
+
+
+msgid "emailPasswordReset.welcome"
+msgstr "Welcome!"
+
+msgid "emailPasswordReset.hi"
+msgstr "Hi %userFirstname% %userLastname%,"
+
+msgid "emailPasswordReset.you_have_requested_to_reset_your_password"
+msgstr "You have requested to reset your password. Please click on following link in order to reset your password: "
+
+msgid "emailPasswordReset.kind_regards"
+msgstr ""
+    "<p>Kind regards</p>"
+    "<p>Lockio-team</p>"
+
+
+
+msgid "emailRegistration.welcome"
+msgstr "Welcome!"
+
+msgid "emailRegistration.hi"
+msgstr "Hi %userFirstname% %userLastname%,"
+
+msgid "emailRegistration.you_have_signed_up"
+msgstr ""
+    "You have signed up with the email %userEmail% on %domainName%. "
+    "In order to use your newly created account you need to activate it. "
+    "Please visit following page to activate your account: "
+
+msgid "emailRegistration.link_will_expire"
+msgstr "The link will expire in 24 hours."
+
+msgid "emailRegistration.kind_regards"
+msgstr ""
+    "<p>Kind regards</p>"
+    "<p>Lockio-team</p>"
+
+
+msgid "emailInvoiceBexio.subject"
+msgstr "Lockio.ch - Invoice"
+
+msgid "emailInvoiceBexio.hi"
+msgstr "Hi %userFirstname% %userLastname%."
+
+msgid "emailInvoiceBexio.find_your_invoice"
+msgstr "Find your invoice by clicking following link: "
+
+msgid "emailInvoiceBexio.kind_regards"
+msgstr ""
+    "<p>Kind regards</p>"
+    "<p>The Lockio-team</p>"
+
+
+msgid "login.page_title"
+msgstr "Login!"
+
+msgid "login.sign_in"
+msgstr "Lockio sign in"
+
+msgid "login.email"
+msgstr "Email"
+
+msgid "login.password"
+msgstr "Password"
+
+msgid "login.forgot_password"
+msgstr "Forgot pasword?"
+
+msgid "login.sign_up"
+msgstr "Sign up"
+
+msgid "login.login"
+msgstr "Login"
+
+msgid "login.authenticator_false"
+msgstr "Access denied"
+
+
+
+msgid "registrationAccountActivated.page_title"
+msgstr "Account activated page"
+
+msgid "registrationAccountActivated.account_activated"
+msgstr "Account activated"
+
+msgid "registrationAccountActivated.your_password_was_set"
+msgstr "Your password was set and your account activated. You can login with your new credentials from now on."
+
+msgid "registrationAccountActivated.go_to_login"
+msgstr "Go to login"
+
+
+
+msgid "registrationActivationSent.page_title"
+msgstr "Activation sent page"
+
+msgid "registrationActivationSent.activation_link_sent"
+msgstr "Activation link sent"
+
+msgid "registrationActivationSent.we_have_sent"
+msgstr "We have sent an activation link to %email% in order to confirm your email. Please follow the instruction on that email to activate your account."
+
+msgid "registrationActivationSent.page_title"
+msgstr "Activation sent page"
+
+msgid "registrationActivationSent.go_to_login"
+msgstr "Go to login"
+
+
+
+msgid "registrationPasswordSet.page_title"
+msgstr "Set password page"
+
+msgid "registrationPasswordSet.set_password"
+msgstr "Set password"
+
+msgid "registrationPasswordSet.activate"
+msgstr "Activate"
+
+
+
+msgid "passwordLinkSent.page_title"
+msgstr "Password link sent"
+
+msgid "passwordLinkSent.password_link_sent"
+msgstr "Password link sent"
+
+msgid "passwordLinkSent.password_link_sent_to_the_email"
+msgstr "An password reset link has been sent to the entered email address  %email%. Please check your inbox for this email."
+
+msgid "passwordLinkSent.go_to_login"
+msgstr "Back to login"
+
+
+
+msgid "passwordNew.page_title"
+msgstr "New password page"
+
+msgid "passwordNew.password_reset"
+msgstr "Password reset"
+
+msgid "passwordNew.set"
+msgstr "Set"
+
+
+
+msgid "passwordReset.page_title"
+msgstr "Password reset"
+
+msgid "passwordReset.password_reset"
+msgstr "Password reset"
+
+msgid "passwordReset.email"
+msgstr "Email"
+
+msgid "passwordReset.cancel"
+msgstr "Cancel"
+
+msgid "passwordReset.reset"
+msgstr "Reset"
+
+
+
+msgid "passwordSet.page_title"
+msgstr "Password set page"
+
+msgid "passwordSet.password_set"
+msgstr "Password set"
+
+msgid "passwordSet.your_password_was_reset"
+msgstr "Your password was reset. You can login now with this new password on the login form."
+
+msgid "passwordSet.go_to_login"
+msgstr "Go to login"
+
+
+
+msgid "registration.page_title"
+msgstr "Registration page"
+
+msgid "registration.sign_up"
+msgstr "Lockio sign up"
+
+msgid "registration.organization_details"
+msgstr "Organization details"
+
+msgid "registration.contact_person"
+msgstr "Contact person"
+
+msgid "registration.cancel"
+msgstr "Cancel"
+
+msgid "registration.register"
+msgstr "Register"
+
+
+
+msgid "profile.page_title"
+msgstr "Profile page"
+
+msgid "profile.profile"
+msgstr "Profile"
+
+msgid "profile.account"
+msgstr "Account"
+
+msgid "profile.email"
+msgstr "Email"
+
+msgid "profile.organization"
+msgstr "Organization"
+
+msgid "profile.organization_name"
+msgstr "Name"
+
+msgid "profile.save"
+msgstr "Save"
+
+
+
+msgid "profileDetails.organization_name"
+msgstr "Organization name"
+
+msgid "profileDetails.organization_address1"
+msgstr "Address #1"
+
+msgid "profileDetails.organization_address2"
+msgstr "Address #2"
+
+msgid "profileDetails.organization_address3"
+msgstr "Address #3"
+
+msgid "profileDetails.organization_zip"
+msgstr "ZIP"
+
+msgid "profileDetails.organization_city"
+msgstr "City"
+
+msgid "profileDetails.organization_country"
+msgstr "Country"
+
+msgid "profileDetails.update_password"
+msgstr "Update password"
+
+msgid "profileDetails.password"
+msgstr "Password"
+
+msgid "profileDetails.repeat_password"
+msgstr "Repeat password"
+
+msgid "profileDetails.user_email"
+msgstr "Email"
+
+msgid "profileDetails.user_firstname"
+msgstr "First name"
+
+msgid "profileDetails.user_lastname"
+msgstr "Last name"
+
+
+msgid "trialPeriodBanner.link"
+msgstr "Active"
+
+msgid "trialPeriodBanner.morePreMessage"
+msgstr "Your trial period ends in %days% days."
+
+msgid "trialPeriodBanner.morePreMessage0"
+msgstr "Your trial period ends today."
+
+msgid "trialPeriodBanner.morePreMessage1"
+msgstr "Your trial period ends tomorrow."
+
+msgid "trialPeriodBanner.morePostMessage"
+msgstr "your account now!"
+
+msgid "trialPeriodBanner.lessPreMessage"
+msgstr "Your trial period has already ended."
+
+msgid "trialPeriodBanner.lessPostMessage"
+msgstr "your account to re-enable the full functionality!"
+
+
+msgid "stripeCharge.description"
+msgstr "Lockio.ch monthly storage"
+
+
+msgid "apiErrors.missingField"
+msgstr "The field ‘%field%‘ is missing"
+
+msgid "apiErrors.accessDenied"
+msgstr "Access Denied"
+
+msgid "apiErrors.notValid"
+msgstr "The field ‘%field%’ is not formatted correctly"

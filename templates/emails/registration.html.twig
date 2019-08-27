@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ 'emailRegistration.welcome' | trans }}{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <p>{{ 'emailRegistration.hi' | trans ({'%userFirstname%': user.firstname, '%userLastname%': user.lastname}) }}</p>
+    <p>{{ 'emailRegistration.you_have_signed_up' | trans ({'%userEmail%': user.email, '%domainName%': domainName}) }} <a href="{{ link }}">{{ link }}</a></p>
+    <p>{{ 'emailRegistration.link_will_expire' | trans }}</p>
+    <p>{{ 'emailRegistration.kind_regards' | trans | raw }}</p>
+</body>
+</html>

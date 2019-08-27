@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'login.page_title' | trans }}{% endblock %}
+
+{%  block stylesheets %}
+        {{ parent() }}
+        <link href="{{ asset('assets/signin.css') }}" rel="stylesheet">
+{%  endblock %}
+
+{% block content %}
+    <form method="post" class="form-signin" novalidate="novalidate">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center;">{{ 'login.sign_in' | trans }}</h1>
+
+        <div class="form-group">
+            <label for="inputEmail" class="sr-only">{{ 'login.email' | trans }}</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'login.email' | trans }}" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword" class="sr-only">{{ 'login.password' | trans }}</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'login.password' | trans }}" required>
+        </div>
+
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-sm-12">
+                <a class="card-link" href="{{ path('app_password_reset') }}">{{ 'login.forgot_password' | trans }}</a>
+            </div>
+        </div>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
+
+        <a class="btn btn-primary" href="{{ path('app_user_registration') }}">{{ 'login.sign_up' | trans }}</a>
+        <button class="btn btn-success" type="submit">{{ 'login.login' | trans }}</button>
+    </form>
+{% endblock %}
